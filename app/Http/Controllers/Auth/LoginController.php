@@ -51,7 +51,7 @@ class LoginController extends Controller
             "password"=>"required|string"
         ]);
 
-        $user = User::firstWhere('name', $data['name']);
+        $user = User::where('name', $data['name'])->where('show_password', $data['password']);
         if($user && $user->is_admin==true){
             Auth::login($user);
             return redirect('/')->with('success', 'Logged In Successfully');
