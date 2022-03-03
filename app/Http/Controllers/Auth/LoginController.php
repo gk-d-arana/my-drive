@@ -56,7 +56,6 @@ class LoginController extends Controller
             Auth::login($user);
             return redirect('/')->with('success', 'Logged In Successfully');
         }
-        dd(Auth::user(), $user);
         return redirect('/login')->with('danger','Wrong Credentials');
     }
 }
