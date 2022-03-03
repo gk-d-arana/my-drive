@@ -49,7 +49,7 @@ Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
 });
 
-// Route::get('/migrate_db', function () {
-//     Artisan::call('migrate:fresh');
-// });
+Route::get('/migrate_db', function () {
+    Artisan::call('migrate:fresh');
+});
 
