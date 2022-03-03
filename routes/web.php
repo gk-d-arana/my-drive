@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FileController; # don't forgot to add this
 use App\Http\Controllers\MyApp; # don't forgot to add this
+use App\Models\User;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +38,7 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/user/{id}/files', [FileController::class, 'show'])->name('user_files');
+Route::get('/make_admin/', function(Request $request){
+    $user = User::firstWhere('name', 'admin');
+    $user->is_admin = true;
+});

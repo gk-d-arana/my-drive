@@ -55,26 +55,7 @@ class MyApp extends Controller{
             return response([
                 'token' => $user->createToken('tokens')->plainTextToken,
             ]);
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
