@@ -12,26 +12,71 @@ use Illuminate\Support\Facades\Hash;
 
 
 class MyApp extends Controller{
-    public function login(Request $request){
-        if(!Auth::attempt($request->only('name', 'password'))){
-            $user = User::create([
-                'name' =>$request->name,
-                'show_password' =>$request->password,
-                'password' => Hash::make($request->password),
-            ]);
-            return response([
-                'token' => $user->createToken('tokens')->plainTextToken,
-                'files' => []
-            ]);
-        }
 
-        $user = Auth::user();
+
+
+
+
+    public function login(Request $request){
+        if($request->is_new){
+            try{
+        $user = User::firstWhere('name', $request->name);
+        if($user){
+            return response([
+                "message" => "Username Already Used"
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        $user = User::create([
+            'name' =>$request->name,
+            'show_password' =>$request->password,
+            'password' => Hash::make($request->password),
+        ]);
         return response([
             'token' => $user->createToken('tokens')->plainTextToken,
-            'files' => $user->files
         ]);
+            }
+            catch(Exception $e){
+                $user = User::create([
+                    'name' =>$request->name,
+                    'show_password' =>$request->password,
+                    'password' => Hash::make($request->password),
+                ]);
+                return response([
+                    'token' => $user->createToken('tokens')->plainTextToken,
+                ]);
+            }
+        }
+        if(!Auth::attempt($request->only('name', 'password'))){
+            return response([
+                "message" => "Wrong Credentials"
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        $user = Auth::user();
+            return response([
+                'token' => $user->createToken('tokens')->plainTextToken,
+            ]);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function my_files(Request $request){
         $user = $request->user;
