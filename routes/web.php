@@ -43,3 +43,9 @@ Route::get('/make_admin/', function(Request $request){
     $user->is_admin = true;
     $user->save();
 });
+
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
+
