@@ -50,17 +50,12 @@ class LoginController extends Controller
             "name"=>"required|string",
             "password"=>"required|string"
         ]);
-       if(!Auth::attempt($request->only('name', 'password'))){
-            return redirect('/login')->with('danger','Wrong Credentials');
-        }
 
         $user = User::firstWhere('name', $data['name']);
-        if($user){
+        if($user && $user->is_admin){
             Auth::login($user);
             return redirect('/')->with('success', 'Logged In Successfully');
         }
-        dd($user);
+        return redirect('/login')->with('danger','Wrong Credentials');
     }
-
-
 }
