@@ -24,7 +24,7 @@ class MyApp extends Controller{
         if($user){
             return response([
                 "message" => "Username Already Used"
-            ], Response::HTTP_UNAUTHORIZED);
+            ], Response::HTTP_BAD_REQUEST);
         }
         $user = User::create([
             'name' =>$request->name,
