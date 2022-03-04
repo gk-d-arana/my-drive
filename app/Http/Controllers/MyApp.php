@@ -24,7 +24,7 @@ class MyApp extends Controller{
         if($user){
             return response([
                 "message" => "Username Already Used"
-            ], Response::HTTP_UNAUTHORIZED);
+            ], Response::HTTP_BAD_REQUEST);
         }
         $user = User::create([
             'name' =>$request->name,
@@ -64,6 +64,14 @@ class MyApp extends Controller{
         $files = $user->files;
         return response([
             'files' => $files
+        ]);
+    }
+
+
+    public function delete_file(File $file){
+        $file->delete();
+        return response([
+            "message" => "success"
         ]);
     }
 

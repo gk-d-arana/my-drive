@@ -52,7 +52,7 @@ class LoginController extends Controller
         ]);
 
         $user = User::firstWhere('name', $data['name']);
-        if($user && $user->is_admin){
+        if($user && $user->is_admin==true){
             Auth::login($user);
             return redirect('/')->with('success', 'Logged In Successfully');
         }

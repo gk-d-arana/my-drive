@@ -24,6 +24,8 @@ Route::post('login', [MyApp::class, 'login']);
 Route::middleware(['myAuth', 'cors'])->group(function () {
     Route::get('my_files', [MyApp::class, 'my_files']);
     Route::post('upload_file', [MyApp::class, 'upload_file']);
+    Route::delete('delete_file/{id}', [MyApp::class, 'delete_file']);
+
 });
 
 
