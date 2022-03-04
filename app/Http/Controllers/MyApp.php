@@ -78,7 +78,7 @@ class MyApp extends Controller
     {
         $file = File::find($id)->first();
         $folderPath=public_path("\storage\\". $file->file);
-        try{unlink($folderPath);}catch(Exception $e){echo $e;}
+        try{unlink($folderPath);}catch(Exception $e){}
         $file->delete();
         return response([
             "message" => "success"

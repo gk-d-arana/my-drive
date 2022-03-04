@@ -22,7 +22,7 @@ class FileController extends Controller
     public function destroy($id){
         $file = File::find($id)->first();
         $folderPath=public_path("\storage\\". $file->file);
-        try{unlink($folderPath);}catch(Exception $e){echo $e;}
+        try{unlink($folderPath);}catch(Exception $e){}
         $user_id = $file->user_id;
         $file->delete();
         $path = '/user/' . $user_id . '/files';
