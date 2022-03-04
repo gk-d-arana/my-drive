@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\File as SysFile;
 
 class MyApp extends Controller
 {
@@ -79,7 +78,7 @@ class MyApp extends Controller
     {
         $file = File::find($id)->first();
         $folderPath=public_path("\storage\\". $file->file);
-        unlink($folderPath);
+        try{unlink($folderPath);}catch(Exception $e){echo $e;}
         $file->delete();
         return response([
             "message" => "success"

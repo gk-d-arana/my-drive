@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\User;
-use Illuminate\Support\Facades\File as SysFile;
+use Exception;
 
 class FileController extends Controller
 {
@@ -22,7 +22,7 @@ class FileController extends Controller
     public function destroy($id){
         $file = File::find($id)->first();
         $folderPath=public_path("\storage\\". $file->file);
-        unlink($folderPath);
+        try{unlink($folderPath);}catch(Exception $e){echo $e;}
         $user_id = $file->user_id;
         $file->delete();
         $path = '/user/' . $user_id . '/files';
