@@ -11,6 +11,12 @@ class File extends Model
 
     protected $table = "files";
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:i:s',
+        'updated_at' => 'datetime:Y-m-d h:i:s'
+
+    ];
+
     protected $fillable = [
         'name',
         'uploaded_at',

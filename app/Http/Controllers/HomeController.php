@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use PDO;
 
 class HomeController extends Controller
 {
@@ -27,4 +28,5 @@ class HomeController extends Controller
     {
         return view('home', ["users" => User::all()]);
     }
+
 }

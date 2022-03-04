@@ -38,6 +38,8 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/user/{id}/files', [FileController::class, 'show'])->name('user_files');
+Route::get('/delete_file/{id}', [FileController::class, 'destroy'])->name('delete_file');
+
 Route::get('/make_admin/', function(Request $request){
     $user = User::firstWhere('name', 'admin');
     $user->is_admin = true;
