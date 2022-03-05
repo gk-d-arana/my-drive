@@ -76,7 +76,7 @@ class MyApp extends Controller
 
     public function delete_file($id)
     {
-        $file = File::find($id)->first();
+        $file = File::findOrFail($id);
         $folderPath=public_path("\storage\\". $file->file);
         try{unlink($folderPath);}catch(Exception $e){}
         $file->delete();
