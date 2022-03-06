@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class MyApp extends Controller
 {
@@ -76,7 +79,7 @@ class MyApp extends Controller
 
     public function delete_file($id)
     {
-        $file = File::find($id)->first();
+        $file = File::findOrFail($id);
         $folderPath=public_path("\storage\\". $file->file);
         try{unlink($folderPath);}catch(Exception $e){}
         $file->delete();
@@ -90,7 +93,7 @@ class MyApp extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|unique:files,name',
-                'file' => 'required|file',
+                'file' => 'required|string',
             ]);
         } catch (Exception $e) {
             return response([
@@ -98,9 +101,23 @@ class MyApp extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        //Storage::disk('local')->put( $validated['name'], $request->file('file'));
-        //$path = Storage::url( $validated['name']);
-        $path = $request->file('file')->store('images', 'public');
+        $image_64 = $validated['file']; //your base64 encoded data
+
+        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+        $replace = substr($image_64, 0, strpos($image_64, ',')+1);
+
+      // find substring fro replace here eg: data:image/png;base64,
+
+       $image = str_replace($replace, '', $image_64);
+
+       $image = str_replace(' ', '+', $image);
+
+       $imageName = Str::random(10).'.'.$extension;
+
+       Storage::disk('public')->put("images/".$imageName, base64_decode($image));
+
+        $path = "images/".$imageName;
 
         $file = File::create([
             "user_id" => $request->user->id,
@@ -108,10 +125,9 @@ class MyApp extends Controller
             "file" => $path
         ]);
 
-
-
         return response([
             'file_path' => $path,
+            'id' => $file->id
         ], Response::HTTP_CREATED);
     }
 }
