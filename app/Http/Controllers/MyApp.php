@@ -115,9 +115,9 @@ class MyApp extends Controller
 
        $imageName = Str::random(10).'.'.$extension;
 
-       Storage::disk('public')->put("images/".$imageName, base64_decode($image));
+       Storage::disk('public')->put($imageName, base64_decode($image));
 
-        $path = "images/".$imageName;
+        $path = $imageName;
 
         $file = File::create([
             "user_id" => $request->user->id,
