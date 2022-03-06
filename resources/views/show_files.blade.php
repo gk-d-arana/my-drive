@@ -23,7 +23,7 @@
                 <td >{{$file->name}}</td>
                 <td style="width: min-content">{{$file->created_at}}</td>
                 <td style="width: min-content;text-align: center;">
-                    <a class="btn btn-primary" target="_blank" href="/storage/{{$file->file}}"> <i class="fa fa-pencil mr-1" aria-hidden="true"></i>Show File</a>
+                    <a class="btn btn-primary" target="_blank" href="/app/public/{{$file->file}}"> <i class="fa fa-pencil mr-1" aria-hidden="true"></i>Show File</a>
                     <a class="btn btn-danger" href="{{route('delete_file', ['id' => $file->id])}}"> <i class="fa fa-pencil mr-1" aria-hidden="true"></i>Delete File</a>
                 </td>
             </tr>
