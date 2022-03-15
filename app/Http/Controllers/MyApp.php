@@ -130,7 +130,7 @@ class MyApp extends Controller{
     {
         try {
             $validated = $request->validate([
-                'name' => 'required|unique:files,name',
+                'name' => 'required|string',
                 'file' => 'required|string',
                 'password' => "required|string"
             ]);
