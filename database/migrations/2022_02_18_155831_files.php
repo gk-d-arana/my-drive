@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('files', function(Blueprint $table){
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            //$table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('file');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('password');
+            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

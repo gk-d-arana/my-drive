@@ -6,6 +6,8 @@ use App\Models\File;
 use App\Models\User;
 use Exception;
 
+
+
 class FileController extends Controller
 {
     public function __construct()
@@ -28,4 +30,6 @@ class FileController extends Controller
         $path = '/user/' . $user_id . '/files';
         return redirect($path)->with('danger','Deleted Successfully');
     }
+
+
 }

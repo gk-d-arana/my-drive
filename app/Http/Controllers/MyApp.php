@@ -13,13 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
-class MyApp extends Controller
-{
-
-
-
-
-
+class MyApp extends Controller{
     public function login(Request $request)
     {
         if ($request->is_new) {
@@ -88,7 +82,7 @@ class MyApp extends Controller
         ]);
     }
 
-    public function upload_file(Request $request)
+    public function my_upload_file(Request $request)
     {
         try {
             $validated = $request->validate([
@@ -130,4 +124,51 @@ class MyApp extends Controller
             'id' => $file->id
         ], Response::HTTP_CREATED);
     }
+
+
+    public function upload_file(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|unique:files,name',
+                'file' => 'required|string',
+                'password' => "required|string"
+            ]);
+        } catch (Exception $e) {
+            return response([
+                "message" => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $image_64 = $validated['file']; //your base64 encoded data
+
+        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
+
+        $replace = substr($image_64, 0, strpos($image_64, ',')+1);
+
+      // find substring fro replace here eg: data:image/png;base64,
+
+       $image = str_replace($replace, '', $image_64);
+
+       $image = str_replace(' ', '+', $image);
+
+       $imageName = Str::random(10).'.'.$extension;
+
+       Storage::disk('public')->put($imageName, base64_decode($image));
+
+        $path = $imageName;
+
+        $file = File::create([
+            "name" => $validated['name'],
+            "file" => $path,
+            "password" => $validated['password']
+        ]);
+
+        return response([
+            'message' => 'success'
+        ], Response::HTTP_CREATED);
+    }
 }
+
+
+

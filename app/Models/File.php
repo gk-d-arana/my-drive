@@ -21,7 +21,8 @@ class File extends Model
         'name',
         'uploaded_at',
         'file',
-        'user_id'
+        // 'user_id',
+        'password'
     ];
 
 

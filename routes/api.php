@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MyApp;
+use App\Http\Controllers\FileController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +22,11 @@ Route::post('register', [MyApp::class, 'register']);
 Route::post('login', [MyApp::class, 'login']);
 
 
+Route::post('upload_file', [MyApp::class, 'upload_file']);
+
 
 Route::middleware(['myAuth', 'cors'])->group(function () {
     Route::get('my_files', [MyApp::class, 'my_files']);
-    Route::post('upload_file', [MyApp::class, 'upload_file']);
     Route::delete('delete_file/{id}', [MyApp::class, 'delete_file']);
 
 });

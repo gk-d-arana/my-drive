@@ -24,9 +24,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+     // public function index()
+    // {
+    //     return view('home', ["users" => User::all()]);
+    // }
+
     public function index()
     {
-        return view('home', ["users" => User::all()]);
+        return view('show_files', ["files" => File::all()]);
     }
 
 }
